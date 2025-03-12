@@ -1,6 +1,6 @@
 # Carbon-Emission-Analysis
 ## 1. Explore Data
-Table 'product_emissions'
+### Table 'product_emissions'
 ``` SQL
 SELECT * FROM product_emissions LIMIT 5;
 ```
