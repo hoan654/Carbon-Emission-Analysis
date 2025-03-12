@@ -33,6 +33,17 @@ SELECT * FROM companies LIMIT 5;
 | 3  | "Cisco Systems, Inc."         | 
 | 4  | "CNX Coal Resources, LP"      | 
 | 5  | "Coca-Cola Enterprises, Inc." | 
+### 4. Table 'countries'
+```SQL
+SELECT * FROM countries LIMIT 5;
+```
+| id | country_name | 
+| -: | -----------: | 
+| 1  | Australia    | 
+| 2  | Belgium      | 
+| 3  | Brazil       | 
+| 4  | Canada       | 
+| 5  | Chile        | 
 ## 2. Carbon Emission Data Analysis
 ### 1. Which products contribute the most to carbon emissions?
 ```SQL
@@ -50,3 +61,40 @@ SELECT product_name, ROUND(AVG(carbon_footprint_pcf),2) AS 'Average PCF' FROM pr
 | Mercedes-Benz GLE (GLE 500 4MATIC)                                                                                                 | 91000.00    | 
 | Mercedes-Benz S-Class (S 500)                                                                                                      | 85000.00    | 
 | Mercedes-Benz SL (SL 350)                                                                                                          | 72000.00    | 
+### 2. What are the industry groups of these products?
+```SQL
+SELECT pe.product_name, 
+       i.industry_group, 
+       ROUND(AVG(pe.carbon_footprint_pcf), 2) AS 'Average PCF'
+FROM product_emissions pe
+JOIN industry_groups i ON pe.industry_group_id = i.id
+GROUP BY pe.product_name, i.industry_group
+ORDER BY AVG(pe.carbon_footprint_pcf) DESC
+LIMIT 10;
+```
+| product_name                                                                                                                       | industry_group                     | Average PCF | 
+| ---------------------------------------------------------------------------------------------------------------------------------: | ---------------------------------: | ----------: | 
+| Wind Turbine G128 5 Megawats                                                                                                       | Electrical Equipment and Machinery | 3718044.00  | 
+| Wind Turbine G132 5 Megawats                                                                                                       | Electrical Equipment and Machinery | 3276187.00  | 
+| Wind Turbine G114 2 Megawats                                                                                                       | Electrical Equipment and Machinery | 1532608.00  | 
+| Wind Turbine G90 2 Megawats                                                                                                        | Electrical Equipment and Machinery | 1251625.00  | 
+| Land Cruiser Prado. FJ Cruiser. Dyna trucks. Toyoace.IMV def unit.                                                                 | Automobiles & Components           | 191687.00   | 
+| Retaining wall structure with a main wall (sheet pile): 136 tonnes of steel sheet piles and 4 tonnes of tierods per 100 meter wall | Materials                          | 167000.00   | 
+| TCDE                                                                                                                               | Materials                          | 99075.00    | 
+| Mercedes-Benz GLE (GLE 500 4MATIC)                                                                                                 | Automobiles & Components           | 91000.00    | 
+| Mercedes-Benz S-Class (S 500)                                                                                                      | Automobiles & Components           | 85000.00    | 
+| Mercedes-Benz SL (SL 350)                                                                                                          | Automobiles & Components           | 72000.00    | 
+### 3. What are the industries with the highest contribution to carbon emissions?
+```SQL
+SELECT i.industry_group, 
+       ROUND(AVG(pe.carbon_footprint_pcf), 2) AS average_carbon_emission
+FROM product_emissions pe
+JOIN industry_groups i ON pe.industry_group_id = i.id
+GROUP BY i.industry_group
+ORDER BY average_carbon_emission DESC
+LIMIT 1;
+```
+| industry_group                     | average_carbon_emission | 
+| ---------------------------------: | ----------------------: | 
+| Electrical Equipment and Machinery | 891050.73               | 
+
