@@ -97,4 +97,15 @@ LIMIT 1;
 | industry_group                     | average_carbon_emission | 
 | ---------------------------------: | ----------------------: | 
 | Electrical Equipment and Machinery | 891050.73               | 
-
+### 4. What are the companies with the highest contribution to carbon emissions?
+``` SQL
+SELECT c.company_name, SUM(p.carbon_footprint_pcf) AS total_emissions
+FROM product_emissions p
+JOIN companies c ON p.company_id = c.id
+GROUP BY c.company_name
+ORDER BY total_emissions DESC
+LIMIT 1;
+```
+| company_name                           | total_carbon_emission | 
+| -------------------------------------: | --------------------: | 
+| "Gamesa Corporación Tecnológica, S.A." | 9778464               | 
