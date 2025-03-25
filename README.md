@@ -109,3 +109,16 @@ LIMIT 1;
 | company_name                           | total_carbon_emission | 
 | -------------------------------------: | --------------------: | 
 | "Gamesa Corporación Tecnológica, S.A." | 9778464               | 
+### 5. What are the countries with the highest contribution to carbon emissions?
+``` SQL
+SELECT co.country_name, 
+       ROUND(SUM(pe.carbon_footprint_pcf), 2) AS total_carbon_emission
+FROM product_emissions pe
+JOIN countries co ON pe.country_id = co.id
+GROUP BY co.country_name
+ORDER BY total_carbon_emission DESC
+LIMIT 1;
+```
+| country_name | total_carbon_emission | 
+| -----------: | --------------------: | 
+| Spain        | 9786130.00            | 
