@@ -122,3 +122,17 @@ LIMIT 1;
 | country_name | total_carbon_emission | 
 | -----------: | --------------------: | 
 | Spain        | 9786130.00            | 
+### 6. What is the trend of carbon footprints (PCFs) over the years?
+``` SQL
+SELECT year, AVG(carbon_footprint_pcf) AS avg_emissions
+FROM product_emissions
+GROUP BY year
+ORDER BY year ASC;
+```
+| year | avg_emissions | 
+| ---: | ------------: | 
+| 2013 | 2399.3190     | 
+| 2014 | 2457.5827     | 
+| 2015 | 43188.9044    | 
+| 2016 | 6891.5210     | 
+| 2017 | 4050.8452     | 
